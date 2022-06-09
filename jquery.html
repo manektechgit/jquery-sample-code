@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <style>
+        .is-invalid {
+            color: #ff5a5a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Javascript / Jquery Validation Demo</h2>
+        <form>
+            <div class="form-group">
+                <label for="first_name">First name:</label>
+                <input type="text" class="form-control" id="first_name" placeholder="Enter first name"
+                    name="first_name">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last name:</label>
+                <input type="text" class="form-control" id="last_name" placeholder="Enter last name" name="last_name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm password"
+                    name="confirm_password">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("body").on("submit", "form", function (e) {
+                e.preventDefault();
+                var validator = validate_form();
+                if (validator.form() != false) {
+                    alert('Form Submitted Successfully.');
+                }
+            });
+            function validate_form() {
+                var validator = $("form").validate({
+                    errorClass: 'is-invalid',
+                    validClass: 'is-valid',
+                    rules: {
+                        first_name: {
+                            required: true,
+                            maxlength: 200,
+                        },
+                        last_name: {
+                            required: true,
+                            maxlength: 200,
+                        },
+                        email: {
+                            required: true,
+                            email: true,
+                            maxlength: 200,
+                        },
+                        password: {
+                            required: true,
+                            maxlength: 50,
+                            minlength: 8,
+                        },
+                        confirm_password: {
+                            required: true,
+                            equalTo: '#password',
+                        },
+                    },
+                    messages: {
+                        first_name: {
+                            required: 'Please enter first name.',
+                            maxlength: 'First name is too long.',
+                        },
+                        last_name: {
+                            required: 'Please enter last name.',
+                            maxlength: 'Last name is too long.',
+                        },
+                        email: {
+                            required: 'Please enter email.',
+                            maxlength: 'Email is too long.',
+                            email: 'Please enter valid email.',
+                        },
+                        password: {
+                            required: 'Please enter password.',
+                            maxlength: 'Password is too long.',
+                            minlength: 'Password should be 8 character long.',
+                        },
+                        confirm_password: {
+                            required: 'Please confirm password.',
+                            equalTo: 'Please enter same password again.',
+                        },
+                    },
+                });
+                return validator;
+            }
+        });
+    </script>
+</body>
+
+</html>
